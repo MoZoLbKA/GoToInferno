@@ -1,9 +1,10 @@
 using Assets.Scripts.Interfaces;
-using Assets.Scripts.Player;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
  namespace Assets.Scripts.Player
 {
+    [RequireComponent(typeof(Animator))]
     public class Player : MonoBehaviour, IHealth, IStats
     {
         public delegate void TakenDamage();
@@ -41,41 +42,48 @@ using UnityEngine;
         }
         public void TakeDamage(int damage)
         {
+            if (damage < 0)            
+                throw new ArgumentOutOfRangeException(); 
+            
             if (timer >= ImmortalityTime && !IsDie)
             {
                 timer = 0;
                 currentHealth -= damage;
                 if (currentHealth <= 0)
                 {
-                    if (dieSound != null)
-                    {
-                        AudioSource.PlayClipAtPoint(dieSound, _transform.position);
-                    }
-                    if (animator != null)
-                        animator.SetTrigger("IsDie");
+                    Die();
                 }
                 else
                 {
-                    if (hurtSound != null)
-                    {
-                        AudioSource.PlayClipAtPoint(hurtSound, _transform.position);
-                    }
-                    if (animator != null)
-                        animator.SetTrigger("Hurt");
-                    Debug.Log("Hurt");
+                    Hurt();
                 }
                 OnHealthHandleer?.Invoke();
             }
         }
-
+        private void Hurt()
+        {
+            if (hurtSound != null)
+                AudioSource.PlayClipAtPoint(hurtSound, _transform.position);
+            animator.SetTrigger("Hurt");
+        }
+        private void Die()
+        {
+            StopAllCoroutines();
+            if (dieSound != null)
+                AudioSource.PlayClipAtPoint(dieSound, _transform.position);
+            animator.SetTrigger("Die");
+            Destroy(gameObject);
+            Time.timeScale = 0;
+           
+        }
         public void Heal(int value)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Stat> GetStats()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
