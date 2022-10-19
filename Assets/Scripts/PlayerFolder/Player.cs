@@ -1,4 +1,5 @@
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -73,7 +74,7 @@ using UnityEngine;
                 AudioSource.PlayClipAtPoint(dieSound, _transform.position);
             animator.SetTrigger("Die");
             Destroy(gameObject);
-            Time.timeScale = 0;
+            Pause.GamePause();
            
         }
         public void Heal(int value)
