@@ -1,7 +1,4 @@
 using Assets.Scripts.Player;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,7 +8,6 @@ public enum Orientation
     Left,
 }
 public class MovementPlayer : MonoBehaviour,IBeginDragHandler,IDragHandler
-
 {
     public const int LAYER_WALL = 3;
     [SerializeField] private Transform wallChecker;
@@ -56,10 +52,7 @@ public class MovementPlayer : MonoBehaviour,IBeginDragHandler,IDragHandler
             {
                 orientation = Orientation.Left;
             }            
-            MoveStrategy.Move();
-                   
-           
-
+            MoveStrategy.Move();                            
         }
     }
     public void OnDrag(PointerEventData eventData)

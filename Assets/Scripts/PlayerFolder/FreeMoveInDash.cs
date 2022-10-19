@@ -36,7 +36,7 @@ namespace Assets.Scripts.Player
                 }
                 if (_animator != null)
                 {
-                    //_animator.SetBool("OnMove", true);
+                    _animator.SetBool("OnMove", true);
                 }
                 _particleSystem?.Stop();
             }
