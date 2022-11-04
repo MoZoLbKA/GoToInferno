@@ -10,6 +10,8 @@ using UnityEngine;
     {
         public delegate void TakenDamage();
         public event TakenDamage OnHealthHandleer;
+        public delegate void HasDied();
+        public event HasDied OnDied;
 
         [Header("Характеристики персонажа")]
         [SerializeField] private int maxHealth;
@@ -74,7 +76,8 @@ using UnityEngine;
                 AudioSource.PlayClipAtPoint(dieSound, _transform.position);
             animator.SetTrigger("Die");
             Destroy(gameObject);
-            Pause.GamePause();
+            OnDied?.Invoke();
+            
            
         }
         public void Heal(int value)

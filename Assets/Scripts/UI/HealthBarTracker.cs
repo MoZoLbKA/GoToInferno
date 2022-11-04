@@ -8,25 +8,25 @@ using UnityEngine.UI;
 public class HealthBarTracker : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject playerGameObj;
 
-    private Player health;
+    private Player _player;
     private Image image;
     void Start()
     {
         image = GetComponent<Image>();
-        health = player.GetComponent<Player>();
-        health.OnHealthHandleer += ChangeHitBar;
+        _player = playerGameObj.GetComponent<Player>();
+        _player.OnHealthHandleer += ChangeHitBar;
     }
     private void ChangeHitBar()
     {
-        if (health.CurrentHealth >= 0)
-            image.fillAmount = (float)health.CurrentHealth / health.MaxHealth;
+        if (_player.CurrentHealth >= 0)
+            image.fillAmount = (float)_player.CurrentHealth / _player.MaxHealth;
         else
             image.fillAmount = 0;
     }
     private void OnDisable()
     {
-        health.OnHealthHandleer -= ChangeHitBar;
+        _player.OnHealthHandleer -= ChangeHitBar;
     }
 }

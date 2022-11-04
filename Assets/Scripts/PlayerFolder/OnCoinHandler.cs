@@ -9,10 +9,13 @@ public class OnCoinHandler : MonoBehaviour
     public event OnCoinChange OnChange;
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (gameObject.layer == 8)
+            Debug.Log(11);
         if (collision.gameObject.layer == coinLayerMask)
         {
-            OnChange?.Invoke();
+            collision.isTrigger = false;
             Destroy(collision.gameObject);
+            OnChange?.Invoke();
         }
     }  
 }

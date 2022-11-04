@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ChangeCountOfCoins : MonoBehaviour
 {    
     [SerializeField] GameObject player;
+    private int countOfMoney = 0;
     private OnCoinHandler handler;
     private TMP_Text text; 
     void Start()
@@ -16,12 +17,9 @@ public class ChangeCountOfCoins : MonoBehaviour
         handler.OnChange += ChangeValue;
     }
     void ChangeValue()
-    {
-        if (!int.TryParse(text.text, out int value))
-        {
-            return;
-        }
-        text.text = (value+1).ToString();
+    {     
+        countOfMoney++;
+        text.text = countOfMoney.ToString();
     }
     private void OnDisable()
     {
